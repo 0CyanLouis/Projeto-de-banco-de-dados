@@ -12,6 +12,6 @@ void delete();
 //inicio do codigo
 int main (){
 printf ("rodando");
-
+printf("ola");
 //fim do codigo     
 }
