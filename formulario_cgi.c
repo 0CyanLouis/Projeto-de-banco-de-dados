@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h>
 
 // Função para decodificar os dados enviados pelo formulário
 void decode_form_data(char *data, char *nome, char *cpf, char *email, char *matricula) {
@@ -22,11 +23,27 @@ void salvar_dados(const char *nome, const char *cpf, const char *email, const ch
     fprintf(arquivo, "Matrícula: %s\n\n", matricula);
     fclose(arquivo);
 
+//redirecionamento dps de 10 sec para a pagina de cadastro 
     printf("Content-Type: text/html\n\n");
-    printf("<html><body>Dados salvos com sucesso!</body></html>\n");
+    printf("<html>\n");
+    printf("<head>\n");
+    printf("<title>Redirecionando...</title>\n");
+    printf("</head>\n");
+    printf("<body>\n");
+    printf("<p>Dados salvos com sucesso!</p>\n");
+    printf("<p>Você será redirecionado para a página de cadastro em breve.</p>\n");
+    printf("<script>\n");
+    printf("    setTimeout(function() {\n");
+    printf("        window.location.href = 'http://localhost:8080/formulario/index.html';\n");
+    printf("    }, 10000); // Tempo de atraso em milissegundos\n");
+    printf("</script>\n");
+    printf("</body>\n");
+    printf("</html>\n");
+
 }
 
 int main(void) {
+    setlocale(LC_ALL,"portuguese.UTF-8");
     char *data;
     char nome[100], cpf[15], email[100], matricula[20];
 
