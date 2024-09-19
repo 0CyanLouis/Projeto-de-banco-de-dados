@@ -2,18 +2,45 @@
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
+#include <ctype.h>
+
+// Função para decodificar caracteres especiais de URL (como %40 para @)
+void url_decode(char *src, char *dest) {
+    char hex[3];
+    while (*src) {
+        if (*src == '%') {
+            hex[0] = *(src + 1);
+            hex[1] = *(src + 2);
+            hex[2] = '\0';
+            *dest = (char) strtol(hex, NULL, 16);  // Converte de hexadecimal para caractere
+            src += 3;
+        } else if (*src == '+') {
+            *dest = ' ';  // '+' em URL encoding vira espaço
+            src++;
+        } else {
+            *dest = *src;
+            src++;
+        }
+        dest++;
+    }
+    *dest = '\0';  // Finaliza a string
+}
 
 // Função para decodificar os dados enviados pelo formulário
 void decode_form_data(char *data, char *nome, char *cpf, char *email, char *matricula) {
-    sscanf(data, "nome=%[^&]&cpf=%[^&]&email=%[^&]&matricula=%s", nome, cpf, email, matricula);
+    char decoded_data[1024];  // Buffer temporário para dados decodificados
+    url_decode(data, decoded_data);  // Decodifica a string inteira
+
+    // Agora podemos usar sscanf nos dados já decodificados
+    sscanf(decoded_data, "nome=%[^&]&cpf=%[^&]&email=%[^&]&matricula=%s", nome, cpf, email, matricula);
 }
 
 // Função para salvar os dados no arquivo .txt
 void salvar_dados(const char *nome, const char *cpf, const char *email, const char *matricula) {
     FILE *arquivo = fopen("dados.txt", "a");
     if (arquivo == NULL) {
-        printf("Content-Type: text/plain\n\n");
-        printf("Erro ao abrir o arquivo!\n");
+        printf("Content-Type: text/html\n\n");
+        printf("<html><body>Erro ao abrir o arquivo!</body></html>\n");
         return;
     }
 
@@ -23,10 +50,34 @@ void salvar_dados(const char *nome, const char *cpf, const char *email, const ch
     fprintf(arquivo, "Matrícula: %s\n\n", matricula);
     fclose(arquivo);
 
-    // Envia uma resposta simples ao frontend
-    printf("Content-Type: text/plain\n\n");
-    printf("Dados salvos com sucesso!\n");
+    printf("Content-Type: text/html\n\n");
+    printf("<html><body>Dados salvos com sucesso!</body></html>\n");
 }
+// Função para decodificar os dados enviados pelo formulário
+//void decode_form_data(char *data, char *nome, char *cpf, char *email, char *matricula) {
+  //  sscanf(data, "nome=%[^&]&cpf=%[^&]&email=%[^&]&matricula=%s", nome, cpf, email, matricula);
+//}
+
+// Função para salvar os dados no arquivo .txt
+//void salvar_dados(const char *nome, const char *cpf, const char *email, const char *matricula) {
+//    FILE *arquivo = fopen("dados.txt", "a");
+//    if (arquivo == NULL) {
+ //       printf("Content-Type: text/plain\n\n");
+ //       printf("Erro ao abrir o arquivo!\n");
+ //       return;
+ //   }
+
+//    fprintf(arquivo, "Nome: %s\n", nome);
+//    fprintf(arquivo, "CPF: %s\n", cpf);
+//    fprintf(arquivo, "Email: %s\n", email);
+//    fprintf(arquivo, "Matrícula: %s\n\n", matricula);
+//    fclose(arquivo);
+
+//    // Envia uma resposta simples ao frontend
+//    printf("Content-Type: text/plain\n\n");
+//    printf("Dados salvos com sucesso!\n");
+//}
+
 
 int main(void) {
     setlocale(LC_ALL, "portuguese.UTF-8");
