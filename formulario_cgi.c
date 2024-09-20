@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
-#include <ctype.h>
 
 // Função para decodificar caracteres especiais de URL (como %40 para @)
 void url_decode(char *src, char *dest) {
@@ -50,34 +49,24 @@ void salvar_dados(const char *nome, const char *cpf, const char *email, const ch
     fprintf(arquivo, "Matrícula: %s\n\n", matricula);
     fclose(arquivo);
 
+//redirecionamento dps de 10 sec para a pagina de cadastro 
     printf("Content-Type: text/html\n\n");
-    printf("<html><body>Dados salvos com sucesso!</body></html>\n");
+    printf("<html>\n");
+    printf("<head>\n");
+    printf("<title>Redirecionando...</title>\n");
+    printf("</head>\n");
+    printf("<body>\n");
+    printf("<p>Dados salvos com sucesso!</p>\n");
+    printf("<p>Você será redirecionado para a página de cadastro em breve.</p>\n");
+    printf("<script>\n");
+    printf("    setTimeout(function() {\n");
+    printf("        window.location.href = 'http://localhost:8080/formulario/index.html';\n");
+    printf("    }, 10000); // Tempo de atraso em milissegundos\n");
+    printf("</script>\n");
+    printf("</body>\n");
+    printf("</html>\n");
+
 }
-// Função para decodificar os dados enviados pelo formulário
-//void decode_form_data(char *data, char *nome, char *cpf, char *email, char *matricula) {
-  //  sscanf(data, "nome=%[^&]&cpf=%[^&]&email=%[^&]&matricula=%s", nome, cpf, email, matricula);
-//}
-
-// Função para salvar os dados no arquivo .txt
-//void salvar_dados(const char *nome, const char *cpf, const char *email, const char *matricula) {
-//    FILE *arquivo = fopen("dados.txt", "a");
-//    if (arquivo == NULL) {
- //       printf("Content-Type: text/plain\n\n");
- //       printf("Erro ao abrir o arquivo!\n");
- //       return;
- //   }
-
-//    fprintf(arquivo, "Nome: %s\n", nome);
-//    fprintf(arquivo, "CPF: %s\n", cpf);
-//    fprintf(arquivo, "Email: %s\n", email);
-//    fprintf(arquivo, "Matrícula: %s\n\n", matricula);
-//    fclose(arquivo);
-
-//    // Envia uma resposta simples ao frontend
-//    printf("Content-Type: text/plain\n\n");
-//    printf("Dados salvos com sucesso!\n");
-//}
-
 
 int main(void) {
     setlocale(LC_ALL, "portuguese.UTF-8");
