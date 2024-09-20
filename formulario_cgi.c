@@ -42,11 +42,34 @@ void salvar_dados(const char *nome, const char *cpf, const char *email, const ch
         printf("<html><body>Erro ao abrir o arquivo!</body></html>\n");
         return;
     }
+    /*
+int i=0;
+char str[144]="";
+    for (i = 0; i < 45; i++)
+    {
+     memset (&str,0,sizeof (str));
+             if(strlen(nome[i])>0){
+            strcat(str, nome[i]);
+            strcat(str, ",");
+            strcat(str, email[i]);
+            strcat(str, ",");
+            strcat(str, cpf[i]);
+            strcat(str,"\n");
+            strcat(str, matricula[i]);
+            strcat(str,"\n");
+            fputs(str,arquivo);
+    }
+}
+*/
 
-    fprintf(arquivo, "Nome: %s\n", nome);
-    fprintf(arquivo, "CPF: %s\n", cpf);
-    fprintf(arquivo, "Email: %s\n", email);
-    fprintf(arquivo, "Matrícula: %s\n\n", matricula);
+    fprintf(arquivo, "Nome: %s",nome);
+    fprintf(arquivo, ", ");
+    fprintf(arquivo, "CPF: %s",cpf);
+    fprintf(arquivo, ", ");
+    fprintf(arquivo, "Email: %s",email);
+    fprintf(arquivo, ", ");
+    fprintf(arquivo, "Matrícula: %s",matricula,"\n");
+    fprintf(arquivo, "\n");
     fclose(arquivo);
 
 //redirecionamento dps de 10 sec para a pagina de cadastro 
