@@ -68,3 +68,30 @@ do {
  while (opcao<4);
 
 }
+
+// função read (ler)
+void read (){
+    FILE *file;
+    char linha [1501;
+    int 1=0;
+    file = fopen ("dados.txt","r");//coloquei o nosso arquivo txt que está guardando as informações de cadastro
+    if (file ==NULL){
+        printf("Erro no Arquivo de dados!");
+        return;
+    }
+    char t[50] = "ARQUIVO ALUNO.CSV";//mudar o nome da variável se for usar outra
+    cabecalho (t);
+    char *result;
+    while (!feof (file))
+    {
+        if ((result = fgets (Linha, 150, file)) != NULL){
+            printf( "Linha %s", linha);
+}
+    }
+    fclose (file);
+    do{
+        printf("\n\rPara voltar ao menu precione a tecla 1 ");
+        scanf ("&d", &l);
+        }while (l!=1);
+        menu ();
+}
