@@ -66,9 +66,9 @@ void cabecalho(char Titulo[50]) {
     printf("|--------------------------------------------------------------------------------|\n");
 
     if (strlen(Titulo) == 0) {
-        printf("\t\t\tCADASTRO DE ALUNO UNIALFA 2024\n");
+        printf("\t\t\tCADASTRO DE ALUNO UniCad 2024\n");
     } else {
-        printf(" %sUNIALFA 2024\n", Titulo);
+        printf(" %sUniCad 2024\n", Titulo);
     }
 
     printf("|--------------------------------------------------------------------------------|\n");
@@ -81,7 +81,7 @@ void menu() {
     char t[50] = "";
     system("cls");
     cabecalho(t);
-    printf("Informe sua opção: \n \t 1 = Cadastro; \n\t 2 = Pesquisa; \n\t 3 = listar alunos; \n\t 4 = Gravar Dados; \n\t 5 = Ler Dados; \n\t 6 = Apagar dados");
+    printf("Informe sua opcao: \n\n \t 1 = Cadastro; \n\t 2 = Pesquisa; \n\t 3 = listar alunos; \n\t 4 = Gravar Dados; \n\t 5 = Ler Dados; \n\t 6 = Apagar dados\n6");
     printf("\r|--------------------------------------------------------------------------------|\n");
 
     do {
@@ -130,7 +130,7 @@ CAD:
     printf("Informe o cpf do aluno: ");
     scanf("\n%14[^\n]s", cpf[linha]);
 
-    printf("Para continuar digite 1. \nPara Sair digite qualquer outro número.\n");
+    printf("Para continuar digite 1. \nPara Sair digite qualquer outro numero.\n");
     scanf("\n%d", &opc);
 
     linha++;
@@ -171,7 +171,7 @@ void pesquisa() {
                 pesquisaNome(nomeP);
                 break;
             default:
-                printf("\nOpção Inválida.");
+                printf("\nOpcao Invalida.");
                 break;
         }
 
@@ -236,7 +236,7 @@ void lista() {
     if (opc == 1) {
         menu();
     } else {
-        printf("\n Opção Inválida.");
+        printf("\n Opcao Invalida.");
     }
 }
 
