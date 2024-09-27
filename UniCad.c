@@ -81,7 +81,7 @@ void menu() {
     char t[50] = "";
     system("cls");
     cabecalho(t);
-    printf("Informe sua opcao: \n\n \t 1 = Cadastro; \n\t 2 = Pesquisa; \n\t 3 = listar alunos; \n\t 4 = Gravar Dados; \n\t 5 = Ler Dados; \n\t 6 = Apagar dados\n6");
+    printf("Informe sua opcao: \n\n \t 1 = Cadastro; \n\t 2 = Pesquisa; \n\t 3 = listar alunos; \n\t 4 = Gravar Dados; \n\t 5 = Ler Dados; \n\t 6 = Apagar dados\n");
     printf("\r|--------------------------------------------------------------------------------|\n");
 
     do {
