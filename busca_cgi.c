@@ -58,7 +58,7 @@ int main(void) {
     // Verifica o método da requisição
     char *request_method = getenv("REQUEST_METHOD");
 
-    if (request_method != NULL && strcmp(request_method, "POST") == 0) {
+    if (request_method != NULL && strcmp(request_method, "GET") == 0) {
         // Método POST - obtem o comprimento do conteúdo
         char *content_length_str = getenv("CONTENT_LENGTH");
         int content_length = content_length_str ? atoi(content_length_str) : 0;

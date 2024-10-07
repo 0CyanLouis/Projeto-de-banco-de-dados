@@ -1,8 +1,19 @@
-.login-dark {
-  height: 1000px;
+body{
   background: #475d62 url(../../../assets/img/star-sky.jpg);
   background-size: cover;
+  height: 1000px;
+}
+.container {
+  display: flex;
   position: relative;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 40%;
+ }
+
+.login-dark {
+  position: relative; 
 }
 
 .login-dark form {
@@ -12,7 +23,7 @@
   padding: 40px;
   border-radius: 4px;
   transform: translate(-50%, -50%);
-  position: absolute;
+  position: inherit;
   top: 50%;
   left: 50%;
   color: #fff;
