@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Formulário de Cadastro</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/Ionicons.css">
+    <link rel="stylesheet" href="assets/css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="assets/css/css/Login-Form-Dark.css">
+    <link rel="stylesheet" href="assets/css/css/busca.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="login-dark">
+            <!-- Formulário de Cadastro -->
+            <form id="formCadastro" action="/cgi-bin/formulario_cgi.exe" method="POST">
+                <h2>Formulário de Cadastro</h2>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="nome" placeholder="Nome" required="">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="cpf" placeholder="CPF" required="">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="email" name="email" placeholder="Email" required="">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="matricula" placeholder="Matrícula" required="">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block" type="submit">Enviar</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Formulário de Busca -->
+        <div class="form">
+            <form id="formBusca" action="/cgi-bin/busca_cgi.exe" method="POST">
+                <h2>Buscar Dados por Matrícula ou CPF</h2>
+                <label for="cpf">CPF:</label>
+                <input type="text" id="cpf" name="cpf" placeholder="Digite o CPF" class="form-control"><br><br>
+                <label for="matricula">Matrícula:</label>
+                <input type="text" id="matricula" name="matricula" placeholder="Digite a Matrícula" class="form-control"><br><br>
+                <button class="btn btn-primary btn-block" id="btn-busca" type="submit">Buscar</button>
+            </form>
+        </div>
+    </div>
+        <div id="resultado">
+            <!-- Os dados encontrados serão exibidos aqui -->
+        </div>
+
+        <div id="listagemCadastros"></div>
+    </div>
+
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        
+    document.addEventListener('DOMContentLoaded', function () {
+        // Formulário de Cadastro
+        document.getElementById('formCadastro').addEventListener('submit', function (e) {
+            e.preventDefault();  // Impede o envio padrão do formulário
+
+            var formData = new FormData(this);  // Coleta os dados do formulário
+
+            fetch('/cgi-bin/formulario_cgi.exe', {
+    method: 'POST',
+    body: formData
+})
+.then(response => {
+    if (response.ok) {
+        return response.text();  // Obter o corpo da resposta
+    }
+    throw new Error('Erro ao realizar cadastro.'); // Lança um erro se a resposta não for ok
+})
+.then(data => {
+    alert('Cadastro realizado com sucesso!'); // Aqui você pode usar 'data' se quiser exibir a resposta
+})
+.catch(error => alert('Erro na conexão com o servidor: ' + error.message));
+
+        });
+
+        // Formulário de Busca
+        document.getElementById('formBusca').addEventListener('submit', function (e) {
+            e.preventDefault();  // Impede o envio padrão do formulário
+
+            var cpf = document.getElementById('cpf').value;  // Obtém o valor do CPF
+            var matricula = document.getElementById('matricula').value;  // Obtém o valor da matrícula
+
+            if (!cpf && !matricula) {
+                alert('Por favor, forneça o CPF ou a Matrícula.');
+                return;  // Não faz a requisição se ambos os campos estiverem vazios
+            }
+
+            var formData = new FormData(this);  // Coleta os dados do formulário
+
+            fetch('/cgi-bin/busca_cgi.exe', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('resultado').innerHTML = data;  // Atualiza o HTML com os resultados
+            })
+            .catch(error => alert('Erro na conexão com o servidor.'));
+        });
+    });
+
+
+    </script>
+</body>
+
+</html>
